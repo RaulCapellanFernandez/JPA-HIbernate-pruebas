@@ -1,11 +1,14 @@
 package es.ule.hibernate.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,13 +28,18 @@ public class Empleado implements Serializable{
 	private String nombre;
 	
 	@Column(name = "FECHA_NACIMIENTO")
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
+	
+	//Relacion One to One Claves foraneas
+	@OneToOne(cascade  = {CascadeType.ALL})
+	@JoinColumn(name = "ID_DIRECCION")
+	private Direccion direccion;
 
 	//Constructores
 	public Empleado() {
 		
 	}
-	public Empleado(Long codigo, String apellidos, String nombre, Date fechaNacimiento) {
+	public Empleado(Long codigo, String apellidos, String nombre, LocalDate fechaNacimiento) {
 		this.codigo = codigo;
 		this.apellidos = apellidos;
 		this.nombre = nombre;
@@ -57,17 +65,25 @@ public class Empleado implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	
+	public Direccion getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 	
 	//Metodo toString
 	@Override
 	public String toString() {
 		return "Empleado [codigo=" + codigo + ", apellidos=" + apellidos + ", nombre=" + nombre + ", fechaNacimiento="
-				+ fechaNacimiento + "]";
+				+ fechaNacimiento + ", direccion=" + direccion + "]";
 	}
 }
