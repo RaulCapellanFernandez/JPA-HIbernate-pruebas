@@ -1,5 +1,6 @@
 package test;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,13 +15,30 @@ public class TestEmpleados {
 	private static EntityManager manager;
 	private static EntityManagerFactory emf;
 	
-	@SuppressWarnings("unchecked")
+	
 	public static void main(String[] args) {
 		emf = Persistence.createEntityManagerFactory("Persistencia");
 		manager = emf.createEntityManager();
 		
-		List<Empleado> empleados = (List<Empleado>) manager.createQuery("FROM Empleado").getResultList();
-		System.out.println("En esta base de datos hay "+ empleados.size()+" empleados.");
+		Empleado e = new Empleado(10L, "Perez", "Pepito", new GregorianCalendar(1996, 5, 25).getTime());
+		Empleado ese = new Empleado(25L, "Farruquito", "Javier", new GregorianCalendar(1899, 1, 1).getTime());
+		
+		manager.getTransaction().begin();
+		manager.persist(e);
+		manager.persist(ese);
+		manager.getTransaction().commit();
+		
+		imprimirTodo();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static void imprimirTodo() {
+		List<Empleado> emps = (List<Empleado>)manager.createQuery("FROM Empleado").getResultList();
+		System.out.println("Hay "+emps.size()+" empleados");
+		for(Empleado emp : emps) {
+			System.out.println(emp.toString());
+		}
+		
 	}
 
 }
