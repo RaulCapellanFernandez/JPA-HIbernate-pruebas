@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Formula;
+
 @Entity
 @Table(name="FINANCES_USER")
 @Access(value=AccessType.PROPERTY)
@@ -27,8 +29,17 @@ public class User {
 	private String lastUpdatedBy;
 	private Date createdDate;
 	private String createdBy;
+	private int age;
 
-	
+	@Formula("lower(datediff(curdate(), birth_date)/365)")
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 	private boolean valid;
 	
 	@Transient//Para que se la sude a hiberante

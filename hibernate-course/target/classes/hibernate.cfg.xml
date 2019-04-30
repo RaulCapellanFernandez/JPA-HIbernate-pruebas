@@ -21,6 +21,7 @@
         <property name="show_sql">true</property>
 
         <mapping class="com.infiniteSkills.data.entities.User"/>
+        <mapping class="com.infiniteSkills.data.entities.TimeTest"/>
 
     </session-factory>
 
