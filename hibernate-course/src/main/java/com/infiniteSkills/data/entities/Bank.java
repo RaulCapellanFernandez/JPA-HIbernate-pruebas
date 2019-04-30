@@ -1,13 +1,18 @@
 package com.infiniteSkills.data.entities;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,6 +50,21 @@ public class Bank {
 
 	@Column(name="CREATED_BY")
 	private String createdBy;
+	
+	@ElementCollection
+	@CollectionTable(name = "BANK_CONTACT", joinColumns = @JoinColumn(name = "BANK_ID"))
+	@Column(name = "NAME")
+	private Collection<String> contacts =  new ArrayList<String>();
+
+	
+	
+	public Collection<String> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(Collection<String> contacts) {
+		this.contacts = contacts;
+	}
 
 	public Long getBankId() {
 		return bankId;
