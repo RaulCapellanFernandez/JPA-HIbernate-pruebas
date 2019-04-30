@@ -4,8 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.AttributeAccessor;
 import org.hibernate.annotations.Formula;
 
 @Entity
@@ -30,7 +34,21 @@ public class User {
 	private Date createdDate;
 	private String createdBy;
 	private int age;
+	
+	
+	private Address adress;
 
+	@Embedded
+	@AttributeOverrides({@AttributeOverride(name="addressLine1", column=@Column(name="USER_ADDRESS_LINE_1")),
+		@AttributeOverride(name="addressLine2", column=@Column(name="USER_ADDRESS_LINE_2")),
+		@AttributeOverride(name="zipCode", column=@Column(name="ZIP_CODE"))})
+	public Address getAdress() {
+		return adress;
+	}
+
+	public void setAdress(Address adress) {
+		this.adress = adress;
+	}
 	@Formula("lower(datediff(curdate(), birth_date)/365)")
 	public int getAge() {
 		return age;

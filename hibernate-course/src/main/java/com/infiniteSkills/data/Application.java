@@ -1,36 +1,43 @@
 package com.infiniteSkills.data;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import com.infiniteSkills.data.entities.Address;
+import com.infiniteSkills.data.entities.Bank;
 import com.infiniteSkills.data.entities.User;
-
 
 public class Application {
 
 	public static void main(String[] args) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			session.getTransaction().begin();
-
+			Transaction transaction = session.beginTransaction();
+			
 			User user = new User();
-			user.setBirthDate(getMyBirthday());
-			user.setCreatedBy("kevin");
+			Address address = new Address();
+			user.setAge(22);
+			user.setBirthDate(new Date());
+			user.setCreatedBy("Kevin");
 			user.setCreatedDate(new Date());
-			user.setEmailAddress("kmb385@yahoo.com");
-			user.setFirstName("Kevin");
-			user.setLastName("Bowersox");
-			user.setLastUpdatedBy("kevin");
+			user.setEmailAddress("kmb3");
+			user.setFirstName("kevin");
+			user.setLastName("bowersox");
+			user.setLastUpdatedBy("kmb");
 			user.setLastUpdatedDate(new Date());
-
+			
+			address.setAddressLine1("line 1");
+			address.setAddressLine2("line2");
+			address.setCity("Philadelphia");
+			address.setState("PA");
+			address.setZipCode("125");
+			
+			user.setAdress(address);
 			session.save(user);
-			session.getTransaction().commit();
 			
-			session.refresh(user);
-			
-			System.out.println(user.getAge());
+			transaction.commit();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,12 +47,4 @@ public class Application {
 		}
 	}
 	
-	private static Date getMyBirthday(){
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, 1984);
-		calendar.set(Calendar.MONTH, 6);
-		calendar.set(Calendar.DATE, 19);
-		return calendar.getTime();
-	}
-
 }
