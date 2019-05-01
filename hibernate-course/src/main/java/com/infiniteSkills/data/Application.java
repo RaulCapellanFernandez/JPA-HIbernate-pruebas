@@ -24,9 +24,10 @@ public class Application {
 			
 			Bank bank = (Bank) session.get(Bank.class, 1L);
 			
-			bank.setName("New Hope Bank");
-			bank.setLastUpdatedBy("Kevin Bowersox");
-			bank.setLastUpdatedDate(new Date());
+			System.out.println(session.contains(bank));
+			session.delete(bank);
+			System.out.println("Method Invoked");
+			System.out.println(session.contains(bank));
 			
 			transaction.commit();
 		} catch (Exception e) {
