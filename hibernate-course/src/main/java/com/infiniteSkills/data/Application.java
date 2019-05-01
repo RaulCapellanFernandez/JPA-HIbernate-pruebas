@@ -17,23 +17,28 @@ import com.infiniteSkills.data.entities.User;
 public class Application {
 
 	public static void main(String[] args) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		
 		try {
-			org.hibernate.Transaction transaction = session.beginTransaction();
-			
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			org.hibernate.Transaction transaction = session.beginTransaction();			
 			Bank bank = (Bank) session.get(Bank.class, 1L);
-			
-			System.out.println(session.contains(bank));
-			session.delete(bank);
-			System.out.println("Method Invoked");
-			System.out.println(session.contains(bank));
-			
 			transaction.commit();
+			session.close();
+			
+			Session session2 = HibernateUtil.getSessionFactory().openSession();
+			org.hibernate.Transaction transaction2 = session2.beginTransaction();
+			
+			System.out.println(session2.contains(bank));
+			session2.update(bank);
+			bank.setName("Test Bank");
+			System.out.println("Method Invoked");
+			System.out.println(session2.contains(bank));
+			
+			transaction2.commit();
+			session2.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			session.close();
 			HibernateUtil.getSessionFactory().close();
 		}
 	}
