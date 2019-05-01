@@ -32,10 +32,15 @@ public class Application {
 			Credential credential = new Credential();
 			credential.setPassword("kevinspassword");
 			credential.setUsername("kmb385");
+			
 			credential.setUser(user);
+			user.setCredential(credential);
 			
 			session.save(credential);
 			transaction.commit();
+			
+			User dbUser = (User) session.get(User.class, credential.getUser().getUserId());
+			System.out.println(dbUser.getFirstName());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

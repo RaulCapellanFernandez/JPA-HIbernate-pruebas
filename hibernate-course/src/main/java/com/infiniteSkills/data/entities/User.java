@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -18,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -39,9 +41,18 @@ public class User {
 	private Date createdDate;
 	private String createdBy;
 	private int age;
-	
-	
 	private List<Address> adress = new ArrayList<Address>();
+	private Credential credential;
+
+	
+	@OneToOne(mappedBy = "user")
+	public Credential getCredential() {
+		return credential;
+	}
+
+	public void setCredential(Credential credential) {
+		this.credential = credential;
+	}
 
 	@ElementCollection
 	@CollectionTable(name ="USER_ADDRESS", joinColumns = @JoinColumn(name = "USER_ID"))
