@@ -3,7 +3,9 @@ package com.infiniteSkills.data.entities;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -54,6 +58,19 @@ public class Account {
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "USER_ACCOUNT", joinColumns = @JoinColumn(name = "ACCOUNT_ID")
+		, inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+	private Set<User> users = new HashSet<User>();//Funcionan con listas
+	
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
 
 	public Long getAccountId() {
 		return accountId;
