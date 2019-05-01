@@ -2,7 +2,9 @@ package com.infiniteSkills.data.entities;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -19,6 +21,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -43,8 +47,17 @@ public class User {
 	private int age;
 	private List<Address> adress = new ArrayList<Address>();
 	private Credential credential;
+	private Set<Account> account = new HashSet<Account>();
 
-	
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "users")
+	public Set<Account> getAccount() {
+		return account;
+	}
+
+	public void setAccount(Set<Account> account) {
+		this.account = account;
+	}
+
 	@OneToOne(mappedBy = "user")
 	public Credential getCredential() {
 		return credential;

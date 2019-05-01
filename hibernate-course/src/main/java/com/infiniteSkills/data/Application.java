@@ -29,17 +29,22 @@ public class Application {
 			
 			account.getUsers().add(user);
 			account.getUsers().add(user2);
+			user.getAccount().add(account);
+			user2.getAccount().add(account);
+			
 			account2.getUsers().add(user);
 			account2.getUsers().add(user2);
+			user.getAccount().add(account2);
+			user2.getAccount().add(account2);
+
 			
-			session.save(account);
-			session.save(account2);
+			session.save(user);
+			session.save(user2);
 			
 			transaction.commit();
 			
-			Account dbAccount = (Account) session.get(Account.class, account.getAccountId());
-			System.out.println(dbAccount.getUsers().iterator().next().getEmailAddress());
-			
+			User dbUser = (User) session.get(User.class, user.getUserId());
+			System.out.println(dbUser.getAccount().iterator().next().getName());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,7 +57,7 @@ public class Application {
 	private static User createUser() {
 		User user = new User();
 		Address address = createAddress();
-		user.setAdress(Arrays.asList(new Address[]{createAddress()}));
+		//user.setAddressess(Arrays.asList(new Address[]{createAddress()}));
 		user.setBirthDate(new Date());
 		user.setCreatedBy("Kevin Bowersox");
 		user.setCreatedDate(new Date());
