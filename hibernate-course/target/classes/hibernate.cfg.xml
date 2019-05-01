@@ -25,6 +25,8 @@
         <mapping class="com.infiniteSkills.data.entities.Bank"/>
         <mapping class="com.infiniteSkills.data.entities.Address"/>
         <mapping class="com.infiniteSkills.data.entities.Credential"/>
+        <mapping class="com.infiniteSkills.data.entities.Account"/>
+        <mapping class="com.infiniteSkills.data.entities.Transaction"/>
 
     </session-factory>
 
