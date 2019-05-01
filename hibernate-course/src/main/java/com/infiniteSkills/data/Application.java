@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 
 import com.infiniteSkills.data.entities.Address;
 import com.infiniteSkills.data.entities.Bank;
+import com.infiniteSkills.data.entities.Credential;
 import com.infiniteSkills.data.entities.User;
 
 public class Application {
@@ -18,16 +19,22 @@ public class Application {
 			Transaction transaction = session.beginTransaction();
 			
 			User user = new User();
-		
-			Address address = new Address();
-			Address address2 = new Address();
-			setAddressFields(address);
-			setAddressFields2(address2);
-			user.getAdress().add(address);
-			user.getAdress().add(address2);
-			setUserFields(user);
+			user.setFirstName("Kevin");
+			user.setLastName("Bowersox");
+			user.setAge(20);
+			user.setBirthDate(new Date());
+			user.setCreatedBy("Kevin Bowersox");
+			user.setCreatedDate(new Date());
+			user.setEmailAddress("kevin.bowersox@navy.mil");
+			user.setLastUpdatedDate(new Date());
+			user.setLastUpdatedBy("Kevin Bowersox");
 
-			session.save(user);
+			Credential credential = new Credential();
+			credential.setPassword("kevinspassword");
+			credential.setUsername("kmb385");
+			credential.setUser(user);
+			
+			session.save(credential);
 			transaction.commit();
 			
 		} catch (Exception e) {
@@ -38,32 +45,5 @@ public class Application {
 		}
 	}
 
-	private static void setUserFields(User user) {
-		user.setAge(22);
-		user.setBirthDate(new Date());
-		user.setCreatedBy("kmb");
-		user.setCreatedDate(new Date());
-		user.setEmailAddress("kmb385");
-		user.setFirstName("Kevin");
-		user.setLastName("bowersox");
-		user.setLastUpdatedBy("kevin");
-		user.setLastUpdatedDate(new Date());
-	}
-
-	private static void setAddressFields(Address address) {
-		address.setAddressLine1("Line 1");
-		address.setAddressLine2("Line 2");
-		address.setCity("New York");
-		address.setState("NY");
-		address.setZipCode("12345");
-	}
-
-	private static void setAddressFields2(Address address) {
-		address.setAddressLine1("Line 3");
-		address.setAddressLine2("Line 4");
-		address.setCity("Corning");
-		address.setState("NY");
-		address.setZipCode("12345");
-	}
 	
 }

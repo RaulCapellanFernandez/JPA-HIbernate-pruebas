@@ -24,6 +24,7 @@
         <mapping class="com.infiniteSkills.data.entities.TimeTest"/>
         <mapping class="com.infiniteSkills.data.entities.Bank"/>
         <mapping class="com.infiniteSkills.data.entities.Address"/>
+        <mapping class="com.infiniteSkills.data.entities.Credential"/>
 
     </session-factory>
 
