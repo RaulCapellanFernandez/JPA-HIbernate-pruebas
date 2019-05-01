@@ -19,24 +19,13 @@ public class Application {
 	public static void main(String[] args) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
-		Account account = createNewAccount();
-		Transaction trans1 = createNewBeltPurchase(account);
-		Transaction trans2 = createShoePurchase(account);
-		account.getTransactions().add(trans1);
-		account.getTransactions().add(trans2);
-		
-		System.out.println(session.contains(account));
-		System.out.println(session.contains(trans1));
-		System.out.println(session.contains(trans1));
-		
 		try {
 			org.hibernate.Transaction transaction = session.beginTransaction();
-			session.save(account);
-
-			System.out.println(session.contains(account));
-			System.out.println(session.contains(trans1));
-			System.out.println(session.contains(trans1));
-
+			//Bank bank = (Bank) session.get(Bank.class, 1L);
+			Bank bank = (Bank) session.load(Bank.class, 1L);
+			System.out.println("+++++++++++++++Method Executed");
+			
+			System.out.println(bank.getName());
 			transaction.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,3 +134,4 @@ public class Application {
 	}
 	
 }
+
