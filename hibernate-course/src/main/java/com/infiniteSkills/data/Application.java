@@ -19,33 +19,25 @@ public class Application {
 	public static void main(String[] args) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
+		Account account = createNewAccount();
+		Transaction trans1 = createNewBeltPurchase(account);
+		Transaction trans2 = createShoePurchase(account);
+		account.getTransactions().add(trans1);
+		account.getTransactions().add(trans2);
+		
+		System.out.println(session.contains(account));
+		System.out.println(session.contains(trans1));
+		System.out.println(session.contains(trans1));
+		
 		try {
 			org.hibernate.Transaction transaction = session.beginTransaction();
-			
-			Account account = createNewAccount();
-			Account account2 = createNewAccount();
-			User user = createUser();
-			User user2 = createUser();
-			
-			account.getUsers().add(user);
-			account.getUsers().add(user2);
-			user.getAccount().add(account);
-			user2.getAccount().add(account);
-			
-			account2.getUsers().add(user);
-			account2.getUsers().add(user2);
-			user.getAccount().add(account2);
-			user2.getAccount().add(account2);
+			session.save(account);
 
-			
-			session.save(user);
-			session.save(user2);
-			
+			System.out.println(session.contains(account));
+			System.out.println(session.contains(trans1));
+			System.out.println(session.contains(trans1));
+
 			transaction.commit();
-			
-			User dbUser = (User) session.get(User.class, user.getUserId());
-			System.out.println(dbUser.getAccount().iterator().next().getName());
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -54,10 +46,27 @@ public class Application {
 		}
 	}
 
+	private static Bank createBank() {
+		Bank bank = new Bank();
+		bank.setName("First United Federal");
+		bank.setAddressLine1("103 Washington Plaza");
+		bank.setAddressLine2("Suite 332");
+		//bank.setAddressType("PRIMARY");
+		bank.setCity("New York");
+		bank.setCreatedBy("Kevin Bowersox");
+		bank.setCreatedDate(new Date());
+		bank.setInternational(false);
+		bank.setLastUpdatedBy("Kevin Bowersox");
+		bank.setLastUpdatedDate(new Date());
+		bank.setState("NY");
+		bank.setZipCode("10000");
+		return bank;
+	}
+
 	private static User createUser() {
 		User user = new User();
 		Address address = createAddress();
-		//user.setAddressess(Arrays.asList(new Address[]{createAddress()}));
+		//user.setAddresses(Arrays.asList(new Address[]{createAddress()}));
 		user.setBirthDate(new Date());
 		user.setCreatedBy("Kevin Bowersox");
 		user.setCreatedDate(new Date());
