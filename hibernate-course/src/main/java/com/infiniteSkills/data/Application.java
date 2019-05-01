@@ -40,7 +40,7 @@ public class Application {
 			transaction.commit();
 			
 			User dbUser = (User) session.get(User.class, credential.getUser().getUserId());
-			System.out.println(dbUser.getFirstName());
+			System.out.println("+++++++++++++++++++++"+dbUser.getFirstName());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
