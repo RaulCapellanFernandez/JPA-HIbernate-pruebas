@@ -27,8 +27,9 @@ public class Application {
 			bank.setCreatedDate(new Date());
 			bank.setLastUpdatedBy("Kevin");
 			bank.setLastUpdatedDate(new Date());
-			bank.getContacts().add("Joe");
-			bank.getContacts().add("Mary");			
+			bank.getContacts().put("MANAGER", "JOE" );
+			bank.getContacts().put("TELLER", "Mary" );
+			
 			session.save(bank);
 			
 			transaction.commit();
