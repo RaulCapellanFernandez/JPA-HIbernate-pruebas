@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -48,6 +52,18 @@ public class Transaction {
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
+	
+	@ManyToOne
+	@JoinColumn(name = "ACCOUNT_ID")
+	private Account account;
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 
 	public Long getTransactionId() {
 		return transactionId;
