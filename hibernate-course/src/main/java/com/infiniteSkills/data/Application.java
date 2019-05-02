@@ -20,24 +20,32 @@ public class Application {
 
 	public static void main(String[] args) {
 																		   		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("infinite-finances");
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction tx =  em.getTransaction();
-		tx.begin();
+		EntityManagerFactory emf = null;
+		EntityManager em = null;
+		EntityTransaction tx = null;
 		
-		Bank bank = em.getReference(Bank.class, 1L);
-		System.out.println(em.contains(bank));
-		System.out.println(bank.getName());
-		
-		tx.commit();		
-		em.close();
-		emf.close();
+		try{
+			emf = Persistence.createEntityManagerFactory("infinite-finances");
+			em = emf.createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+			
+			Bank bank = em.find(Bank.class, 1L);
+			bank.setName("Cañorero");
+			
+			tx.commit();		
+		}catch(Exception e){
+			tx.rollback();
+		}finally{
+			em.close();
+			emf.close();
+		}
 		
 	}
 
 	private static Bank createBank() {
 		Bank bank = new Bank();
-		bank.setName("First Unds<fsdfed Federal");
+		bank.setName("First United Federal");
 		bank.setAddressLine1("103 Washington Plaza");
 		bank.setAddressLine2("Suite 332");
 		//bank.setAddressType("PRIMARY");
