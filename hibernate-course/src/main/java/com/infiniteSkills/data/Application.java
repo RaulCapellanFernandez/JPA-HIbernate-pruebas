@@ -19,33 +19,25 @@ import com.infiniteSkills.data.entities.User;
 public class Application {
 
 	public static void main(String[] args) {
+																		   		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("infinite-finances");
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx =  em.getTransaction();
+		tx.begin();
 		
-		EntityManagerFactory factory = null;
-		EntityManager em = null;
-		EntityTransaction tx = null;
+		Bank bank = em.getReference(Bank.class, 1L);
+		System.out.println(em.contains(bank));
+		System.out.println(bank.getName());
 		
-		try{
-			factory = Persistence.createEntityManagerFactory("infinite-finances");
-			em = factory.createEntityManager();
-			tx = em.getTransaction();
-			tx.begin();
-			
-			Bank bank = createBank();
-			em.persist(bank);
-			
-			tx.commit();
-		}catch(Exception e){
-			tx.rollback();
-		}finally{
-			em.close();
-			factory.close();
-		}
-			
+		tx.commit();		
+		em.close();
+		emf.close();
+		
 	}
 
 	private static Bank createBank() {
 		Bank bank = new Bank();
-		bank.setName("First United Dick");
+		bank.setName("First Unds<fsdfed Federal");
 		bank.setAddressLine1("103 Washington Plaza");
 		bank.setAddressLine2("Suite 332");
 		//bank.setAddressType("PRIMARY");
