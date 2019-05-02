@@ -30,7 +30,7 @@ public class Application {
 			tx = em.getTransaction();
 			tx.begin();
 			
-			Bank bank = em.find(Bank.class, 1L);
+			Bank bank = em.find(Bank.class, 1L); 
 			System.out.println(em.contains(bank));
 			em.remove(bank);
 			System.out.println(em.contains(bank));
