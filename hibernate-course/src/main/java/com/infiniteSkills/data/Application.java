@@ -19,23 +19,28 @@ import com.infiniteSkills.data.entities.User;
 public class Application {
 
 	public static void main(String[] args) {
-																		   		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("infinite-finances");
-		EntityManager em = emf.createEntityManager();
 		
-		EntityTransaction tx =  em.getTransaction();
-
-		tx.begin();
+		EntityManagerFactory factory = null;
+		EntityManager em = null;
+		EntityTransaction tx = null;
 		
-		Bank bank = createBank();
-		
-		em.persist(bank);
-		
-		tx.commit();
-		
-		em.close();
-		emf.close();
-		
+		try{
+			factory = Persistence.createEntityManagerFactory("infinite-finances");
+			em = factory.createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+			
+			Bank bank = createBank();
+			em.persist(bank);
+			
+			tx.commit();
+		}catch(Exception e){
+			tx.rollback();
+		}finally{
+			em.close();
+			factory.close();
+		}
+			
 	}
 
 	private static Bank createBank() {
