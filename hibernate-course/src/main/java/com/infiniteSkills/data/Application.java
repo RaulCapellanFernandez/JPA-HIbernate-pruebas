@@ -45,7 +45,7 @@ public class Application {
 
 	private static Bank createBank() {
 		Bank bank = new Bank();
-		bank.setName("First United Federal");
+		bank.setName("First United Dick");
 		bank.setAddressLine1("103 Washington Plaza");
 		bank.setAddressLine2("Suite 332");
 		//bank.setAddressType("PRIMARY");
