@@ -30,11 +30,14 @@ public class Application {
 			tx = em.getTransaction();
 			tx.begin();
 			
-			Bank bank = em.find(Bank.class, 1L); 
-			System.out.println(em.contains(bank));
-			em.remove(bank);
+			Bank bank = em.find(Bank.class, 2L);
+			em.detach(bank);
 			System.out.println(em.contains(bank));
 			
+			bank.setName("Something else");
+			Bank bank2 = em.merge(bank);
+			
+			bank.setName("Something else 2");
 			tx.commit();		
 		}catch(Exception e){
 			tx.rollback();
